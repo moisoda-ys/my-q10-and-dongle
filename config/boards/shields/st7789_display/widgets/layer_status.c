@@ -30,7 +30,7 @@ static uint16_t *scaled_bitmap_layer_font;
 
 SlotSide layer_slot_side = SLOT_SIDE_NONE;
 static uint16_t layer_x = 120;
-static uint16_t layer_x_end = 120;
+static uint16_t layer_x_end = 240;
 static uint16_t layer_y = 30;
 static uint8_t label_limit = 100;
 
@@ -178,12 +178,11 @@ void zmk_widget_layer_init() {
     scaled_bitmap_layer_font = k_malloc(layer_font_size * 2 * sizeof(uint16_t));
     last_printed_layer = (struct layer_status_state){.index = 0, .label = '\0'};
 
-    /* layer_slot_side = get_slot_to_print(INFO_SLOT_LAYER);
-     if (layer_slot_side == SLOT_SIDE_RIGHT) {
-         layer_x += 120;
-         layer_x_end += 120;
-     }
- */
+    layer_slot_side = get_slot_to_print(INFO_SLOT_LAYER);
+    if (layer_slot_side == SLOT_SIDE_LEFT) {
+        layer_x = 0;
+        layer_x_end = 120;
+    }
     widget_layer_status_init();
 }
 
