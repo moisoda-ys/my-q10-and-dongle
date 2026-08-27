@@ -180,12 +180,26 @@ RC(6,1)          RC(6,0)             RC(5,0)             RC(2,0)          RC(3,2
     bbtrackpad_listener: bbtrackpad_listener {
         compatible = "zmk,input-listener";
         status = "disabled";
-        device = <&bbtrackpad>;
+        device = <&bbtrackpad_split>;
+    };
+
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        bbtrackpad_split: bbtrackpad_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+        };
     };
 };
 
+&bbtrackpad_split {
+    device = <&bbtrackpad>;
+};
+
 &bbtrackpad_listener {
-    status = "okay";
+    status = "disabled";
 };
 
 
@@ -345,5 +359,4 @@ zephyr_udc0: &usbd {
         };
     };
 };
-
 
