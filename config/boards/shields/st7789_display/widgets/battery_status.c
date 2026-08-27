@@ -47,7 +47,7 @@ static uint8_t previous_battery_level_1 = 0;
 
 #ifdef CONFIG_SHOW_SINGLE_BATTERY
 static const uint16_t font_offset = 6;
-static const uint16_t single_battery_offset = 60;
+static const uint16_t single_battery_offset = 0;
 #else
 static const uint16_t font_offset = 2;
 #endif
