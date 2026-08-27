@@ -31,9 +31,9 @@ static uint16_t layer_font_height = 8;
 static uint16_t *scaled_bitmap_layer_font;
 
 SlotSide layer_slot_side = SLOT_SIDE_NONE;
-static uint16_t layer_x = 120;
+static uint16_t layer_x = 0;
 static uint16_t layer_x_end = 240;
-static uint16_t layer_y = 176;
+static uint16_t layer_y = 20;
 static uint8_t label_limit = 100;
 
 typedef enum {
@@ -145,11 +145,6 @@ void zmk_widget_layer_init() {
     current_layer = (struct layer_status_state){.index = 0, .label = default_layer_marker};
     last_printed_layer = (struct layer_status_state){.index = 0, .label = default_layer_marker};
 
-    layer_slot_side = get_slot_to_print(INFO_SLOT_LAYER);
-    if (layer_slot_side == SLOT_SIDE_LEFT) {
-        layer_x = 0;
-        layer_x_end = 120;
-    }
     widget_layer_status_init();
 }
 
