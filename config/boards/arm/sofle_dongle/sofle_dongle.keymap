@@ -17,7 +17,6 @@
 
 #define FUNC 1
 #define RES 2
-#define BOT bootloader
 
 / {
     input_processors {
@@ -77,6 +76,15 @@
     };
 
     behaviors {
+        td_bootloader: td_bootloader {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <400>;
+            bindings = <&none>, <&bootloader>;
+        };
+    };
+
+    behaviors {
          sp_sc: behavior_spacescroll {
            compatible = "zmk,behavior-hold-tap";
            #binding-cells = <2>;
@@ -100,7 +108,7 @@
          default_layer {
             display-name = "QWERTY";
            bindings = <
-                                                                            &BOT
+                                                                            &td_bootloader
 &kp ESC   &kp N1   &kp N2     &kp N3   &kp N4    &kp N5    &kp C_MUTE                   &kp C_MUTE                     &kp N6      &kp N7      &kp N8    &kp N9    &kp N0   &kp BSPC            
 &kp TAB   &kp Q    &kp W      &kp E    &kp R     &kp T                                                                 &kp Y       &kp U       &kp I     &kp O     &kp P    &kp ENTER
 &kp CAPS  &kp A    &kp S      &kp D    &kp F     &kp G     &mkp LCLK                    &mkp LCLK                      &kp H       &kp J       &kp K     &kp L     &kp SEMI &kp BSLH
@@ -114,12 +122,12 @@
         lower_layer {
             display-name = "LOWER";
             bindings = <
-                                                                                 &BOT
+                                                                                 &td_bootloader
 &kp GRAVE   &kp F1    &kp F2     &kp F3    &kp F4    &kp F5           &bt BT_CLR                   &kp C_MUTE             &kp F6    &kp F7   &kp SLASH  &kp STAR  &kp MINUS  &kp DEL            
 &kp TAB     &trans    &kp UP     &trans    &trans    &out OUT_TOG                                                         &kp F8    &kp N7   &kp N8     &kp N9    &kp HOME   &kp ENTER
 &kp CAPS    &kp LEFT  &kp DOWN   &kp RIGHT &trans    &trans           &mkp RCLK                    &mkp RCLK              &kp F10   &kp N4   &kp N5     &kp N6    &kp QMARK  &kp PIPE
 &kp LSHFT   &trans    &trans     &trans    &trans    &rgb_ug RGB_TOG  &trans     &trans            &bl BL_DEC  &bl BL_INC &kp F12   &kp N1   &kp N2     &kp N3    &kp UNDER  &kp PLUS
-                      &BOT       &kp LGUI  &kp LALT  &kp SPACE        &mo 1                                               &mo 1     &kp N0   &to 3      &kp DOT   &BOT 
+                      &td_bootloader       &kp LGUI  &kp LALT  &kp SPACE        &mo 1                                               &mo 1     &kp N0   &to 3      &kp DOT   &td_bootloader 
             >;
             sensor-bindings = <&BLE_encoder &inc_dec_kp UP DOWN>;
         };
@@ -127,7 +135,7 @@
         raise_layer {
             display-name = "RAISE";
             bindings = <
-                                                                       &BOT
+                                                                       &td_bootloader
 &kp GRAVE   &kp F1    &kp F2     &kp F3    &kp F4    &kp F5           &bt BT_CLR                      &kp C_MUTE       &none      &none     &none     &kp UP    &none      &kp BSPC            
 &kp TAB     &trans    &kp UP     &trans    &trans    &out OUT_TOG                                                      &none      &none     &kp LEFT  &kp DOWN  &kp RIGHT  &none
 &kp CAPS    &kp LEFT  &kp DOWN   &kp RIGHT &trans    &trans           &mkp RCLK                       &none            &mkp LCLK  &mkp RCLK &none     &none     &none      &none
@@ -138,7 +146,7 @@
         MOUSE_layer {
             display-name = "MOUSE";
             bindings = <
-                                                                         &BOT
+                                                                         &td_bootloader
 &kp ESC   &kp N1    &kp N2     &kp N3   &kp N4   &kp N5     &bt BT_CLR                       &kp C_MUTE       &none      &none      &none   &none         &none  &kp BSPC            
 &kp TAB   &kp Q     &kp W      &kp E    &kp R    &kp T                                                        &none      &mkp MB3   &none   &none         &none  &none
 &kp CAPS  &kp A     &kp S      &kp D    &kp F    &none      &mkp LCLK                        &mkp LCLK        &none      &mkp LCLK  &none   &none         &none  &none
@@ -149,7 +157,7 @@
                 RES_layer { 
             display-name = "RESERVE";
             bindings = <
-                                                                         &BOT
+                                                                         &td_bootloader
 &none     &none     &none      &none    &none    &none   &none                        &none            &none   &none  &none   &none  &none  &none            
 &none     &none     &none      &none    &none    &none                                                 &none   &none  &none   &none  &none  &none
 &none     &none     &none      &none    &none    &none   &none                        &none            &none   &none  &none   &none  &none  &none
