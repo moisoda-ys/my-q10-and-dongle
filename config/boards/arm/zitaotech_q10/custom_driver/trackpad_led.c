@@ -120,13 +120,18 @@ static void animation_work_handler(struct k_work *work) {
 }
 
 static void polling_work_handler(struct k_work *work) {
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
     enum zmk_transport transport = zmk_endpoints_selected().transport;
     bool current_capslock = (zmk_hid_indicators_get_current_profile() & HID_INDICATORS_CAPS_LOCK);
+#else
+    bool current_capslock = false;
+#endif
     bool current_touch = tp_is_touched();
     bool current_active = (zmk_activity_get_state() == ZMK_ACTIVITY_ACTIVE);
     uint8_t current_brt = zmk_backlight_get_brt();
 
     /* ---------------- USB 模式 ---------------- */
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
     if (transport == ZMK_TRANSPORT_USB) {
         if (!usb_mode) {
             /* 进入 USB 模式：启动闪烁任务 */
@@ -139,6 +144,7 @@ static void polling_work_handler(struct k_work *work) {
         k_work_reschedule(&polling_work, K_MSEC(POLLING_INTERVAL_MS));
         return;
     }
+#endif
 
     /* ---------------- BLE 模式 ---------------- */
     if (usb_mode) {
