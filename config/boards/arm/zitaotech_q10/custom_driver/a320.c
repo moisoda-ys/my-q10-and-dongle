@@ -23,7 +23,7 @@
 
 #include "trackpad_led.h"
 
-LOG_MODULE_REGISTER(a320, CONFIG_A320_LOG_LEVEL);
+LOG_MODULE_REGISTER(a320, LOG_LEVEL_INF);
 
 /* =========================
  * Configurable parameters
