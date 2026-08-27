@@ -99,14 +99,12 @@ void print_menu() {
     start_battery_status();
     start_output_status();
     start_wpm_status();
-    start_modifier_status();
     start_layer_status();
     set_status_symbol();
     set_battery_symbol();
     print_layer();
     print_themes();
     print_wpm();
-    print_modifiers();
 }
 
 void toggle_menu() {
