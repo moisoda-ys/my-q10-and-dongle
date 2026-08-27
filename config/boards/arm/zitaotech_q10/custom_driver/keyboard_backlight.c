@@ -107,8 +107,6 @@ static void polling_work_handler(struct k_work *work) {
 #if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
     current_layer = zmk_keymap_highest_layer_active();
 #endif
-    struct zmk_led_hsb ug = zmk_rgb_underglow_calc_brt(0);
-    uint8_t ug_brt = ug.b;
     bool rgb_on = true;
 #if IS_ENABLED(CONFIG_ZMK_RGB_UNDERGLOW)
     if (zmk_rgb_underglow_get_state(&rgb_on) < 0) {
@@ -128,9 +126,8 @@ static void polling_work_handler(struct k_work *work) {
 
         switch (current_layer) {
         case 0:
-            /* 层0：跟随 RGB 和活动状态 */
-            uint8_t brt = (rgb_on && active) ? ug_brt : 0;
-            set_led_brightness(brt);
+            /* The peripheral cannot observe central layer changes, so keep its base light steady. */
+            set_led_brightness(BRT_MAX);
             break;
 
         case 1:

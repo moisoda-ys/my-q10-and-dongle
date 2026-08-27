@@ -22,6 +22,8 @@ static bool layer_widget_running = false;
 
 static struct layer_status_state current_layer;
 static struct layer_status_state last_printed_layer;
+static const char default_layer_marker[] = "";
+static const char active_layer_marker[] = "*";
 
 static uint16_t layer_font_scale = 8;
 static uint16_t layer_font_width = 3;
@@ -164,7 +166,10 @@ static void layer_status_update_cb(struct layer_status_state state) {
 
 static struct layer_status_state layer_status_get_state(const zmk_event_t *eh) {
     uint8_t index = zmk_keymap_highest_layer_active();
-    return (struct layer_status_state){.index = index, .label = zmk_keymap_layer_name(index)};
+    return (struct layer_status_state){
+        .index = index,
+        .label = index == 0 ? default_layer_marker : active_layer_marker,
+    };
 }
 
 ZMK_DISPLAY_WIDGET_LISTENER(widget_layer_status, struct layer_status_state, layer_status_update_cb,
@@ -176,7 +181,8 @@ void zmk_widget_layer_init() {
     uint16_t layer_font_size =
         (layer_font_width * layer_font_scale) * (layer_font_height * layer_font_scale);
     scaled_bitmap_layer_font = k_malloc(layer_font_size * 2 * sizeof(uint16_t));
-    last_printed_layer = (struct layer_status_state){.index = 0, .label = '\0'};
+    current_layer = (struct layer_status_state){.index = 0, .label = default_layer_marker};
+    last_printed_layer = (struct layer_status_state){.index = 0, .label = default_layer_marker};
 
     layer_slot_side = get_slot_to_print(INFO_SLOT_LAYER);
     if (layer_slot_side == SLOT_SIDE_LEFT) {
