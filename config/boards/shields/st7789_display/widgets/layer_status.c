@@ -22,8 +22,8 @@ static bool layer_widget_running = false;
 
 static struct layer_status_state current_layer;
 static struct layer_status_state last_printed_layer;
-static const char default_layer_marker[] = "";
-static const char active_layer_marker[] = "*";
+static const char default_layer_marker[] = "***";
+static const char active_layer_marker[] = "";
 
 static uint16_t layer_font_scale = 8;
 static uint16_t layer_font_width = 3;
@@ -33,7 +33,7 @@ static uint16_t *scaled_bitmap_layer_font;
 SlotSide layer_slot_side = SLOT_SIDE_NONE;
 static uint16_t layer_x = 120;
 static uint16_t layer_x_end = 240;
-static uint16_t layer_y = 116;
+static uint16_t layer_y = 30;
 static uint8_t label_limit = 100;
 
 typedef enum {

@@ -30,7 +30,7 @@ static uint16_t *scaled_bitmap_wpm_font;
 
 SlotSide wpm_slot_side = SLOT_SIDE_NONE;
 static uint16_t wpm_x = 14;
-static uint16_t wpm_y = 121;
+static uint16_t wpm_y = 116;
 
 struct wpm_speed_state {
     uint8_t wpm;
@@ -39,9 +39,6 @@ struct wpm_speed_state {
 static struct wpm_speed_state wpm_speed;
 
 void print_wpm() {
-    if (wpm_slot_side == SLOT_SIDE_NONE) {
-        return;
-    }
     uint8_t wpm_string_size = 3;
     uint8_t gap = 2;
 

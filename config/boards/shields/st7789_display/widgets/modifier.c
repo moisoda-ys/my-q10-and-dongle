@@ -29,8 +29,8 @@ static uint16_t modifier_font_height = 11;
 static uint16_t *scaled_bitmap_modifier_font;
 
 SlotSide modifier_slot_side = SLOT_SIDE_NONE;
-static uint16_t modifier_x = 7;
-static uint16_t modifier_y = 120;
+static uint16_t modifier_x = 127;
+static uint16_t modifier_y = 180;
 
 struct modifiers_state {
     uint8_t modifiers;
@@ -67,10 +67,6 @@ static const uint16_t shitf_bitmap[] = {
 };
 
 void print_modifiers() {
-    if (modifier_slot_side == SLOT_SIDE_NONE) {
-        return;
-    }
-
     if ((modifier_state.modifiers & (MOD_LGUI | MOD_RGUI)) > 0) {
         render_bitmap(scaled_bitmap_modifier_font, cmd_bitmap, modifier_x, modifier_y,
                       modifier_font_width, modifier_font_height, modifier_font_scale,
