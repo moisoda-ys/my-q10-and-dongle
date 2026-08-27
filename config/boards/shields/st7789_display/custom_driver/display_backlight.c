@@ -10,6 +10,7 @@
 #include <zephyr/logging/log.h>
 
 #include <zmk/activity.h>
+#include <zmk/usb.h>
 #include <zmk/event_manager.h>
 #include <zmk/events/activity_state_changed.h>
 
@@ -38,6 +39,7 @@ static uint8_t target_brightness;
 
 /* ==== Work ==== */
 static struct k_work_delayable fade_work;
+static struct k_work_delayable usb_state_work;
 
 /* ==== Helpers ==== */
 static void set_backlight(uint8_t brightness) {
@@ -71,6 +73,11 @@ static void fade_to(uint8_t brightness) {
     k_work_schedule(&fade_work, K_NO_WAIT);
 }
 
+static void usb_state_work_handler(struct k_work *work) {
+    fade_to(zmk_usb_is_hid_ready() ? ACTIVE_BRIGHTNESS : 0);
+    k_work_reschedule(&usb_state_work, K_MSEC(1000));
+}
+
 /* ==== Activity listener ==== */
 static int activity_listener_cb(const zmk_event_t *eh) {
     const struct zmk_activity_state_changed *ev = as_zmk_activity_state_changed(eh);
@@ -100,11 +107,13 @@ static int display_backlight_init(void) {
     }
 
     k_work_init_delayable(&fade_work, fade_work_handler);
+    k_work_init_delayable(&usb_state_work, usb_state_work_handler);
 
     current_brightness = 0;
     set_backlight(0);
 
     fade_to(ACTIVE_BRIGHTNESS);
+    k_work_reschedule(&usb_state_work, K_NO_WAIT);
 
     LOG_INF("Display backlight initialized (activity controlled)");
 
