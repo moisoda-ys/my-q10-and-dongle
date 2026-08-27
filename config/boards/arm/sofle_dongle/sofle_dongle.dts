@@ -25,7 +25,7 @@
     };
 
     kscan0: kscan {
-        status = "disabled";
+        status = "okay";
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "col2row";
         row-gpios
