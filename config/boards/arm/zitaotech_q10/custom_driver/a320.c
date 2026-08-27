@@ -227,11 +227,16 @@ static void a320_poll_work_handler(struct k_work *work) {
             /* ===== Normal mouse mode ===== */
 
             if (!capslock) {
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
                 uint8_t brt = indicator_tp_get_last_valid_brightness();
                 float factor = 0.4f + 0.01f * brt;
 
                 dx = dx * 3 / 2 * factor;
                 dy = dy * 3 / 2 * factor;
+#else
+                dx = dx * 3 / 2;
+                dy = dy * 3 / 2;
+#endif
             }
 
             if (capslock) {
