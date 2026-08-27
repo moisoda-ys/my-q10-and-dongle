@@ -1,10 +1,11 @@
 ---
 include:
   - board: sofle_dongle
+    shield: st7789_display
   - board: zitaotech_q10
 
   # Flash these once to clear saved Bluetooth/settings data.
   - board: sofle_dongle
-    shield: settings_reset
+    shield: st7789_display;settings_reset
   - board: zitaotech_q10
     shield: settings_reset

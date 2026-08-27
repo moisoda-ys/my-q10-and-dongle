@@ -103,7 +103,10 @@ static void cycle_work_handler(struct k_work *work) {
 
 static void polling_work_handler(struct k_work *work) {
     bool active = (zmk_activity_get_state() == ZMK_ACTIVITY_ACTIVE);
-    int current_layer = zmk_keymap_highest_layer_active();
+    int current_layer = 0;
+#if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
+    current_layer = zmk_keymap_highest_layer_active();
+#endif
     struct zmk_led_hsb ug = zmk_rgb_underglow_calc_brt(0);
     uint8_t ug_brt = ug.b;
     bool rgb_on = true;
