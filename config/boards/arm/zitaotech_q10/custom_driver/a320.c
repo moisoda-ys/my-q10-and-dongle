@@ -181,11 +181,8 @@ static void a320_poll_work_handler(struct k_work *work) {
     struct k_work_delayable *dwork = CONTAINER_OF(work, struct k_work_delayable, work);
     struct a320_data *data = CONTAINER_OF(dwork, struct a320_data, poll_work);
 
-    int pin_state = gpio_pin_get(motion_gpio_dev, MOTION_GPIO_PIN);
-
-    if (pin_state == 0) {
-
-        int16_t dx = 0, dy = 0;
+    /* The A320 motion registers are safe to poll and return zero when idle. */
+    int16_t dx = 0, dy = 0;
 
         if (data->read_motion(data->dev, &dx, &dy) == 0 && (dx || dy)) {
 
@@ -246,8 +243,8 @@ static void a320_poll_work_handler(struct k_work *work) {
                 input_report_rel(data->dev, INPUT_REL_Y, dy, true, K_FOREVER);
                 touched = true;
             }
-        }
-    } else {
+    }
+    else {
         touched = false;
     }
 
