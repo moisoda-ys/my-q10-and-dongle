@@ -33,7 +33,7 @@ static uint16_t *scaled_bitmap_layer_font;
 SlotSide layer_slot_side = SLOT_SIDE_NONE;
 static uint16_t layer_x = 120;
 static uint16_t layer_x_end = 240;
-static uint16_t layer_y = 30;
+static uint16_t layer_y = 116;
 static uint8_t label_limit = 100;
 
 typedef enum {
